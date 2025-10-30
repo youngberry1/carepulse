@@ -13,6 +13,10 @@ export const metadata: Metadata = {
   authors: [{ name: 'Trending Boss' }],
   creator: 'CarePulse',
   publisher: 'CarePulse',
+  icons: {
+    icon: '/carepulse.png',
+    shortcut: '/carepulse.png',
+  },
   formatDetection: {
     email: false,
     address: false,

@@ -21,6 +21,7 @@ export default function OnboardingPage() {
     email: "",
     phone: "",
   });
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -95,6 +96,10 @@ export default function OnboardingPage() {
     setIsOTPModalOpen(false);
   };
 
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <>
       <main className="min-h-screen w-full flex flex-col md:flex-row bg-[#0D0F12]">
@@ -113,7 +118,7 @@ export default function OnboardingPage() {
                 />
               </div>
               <div>
-                <span className="text-2xl sm:text-3xl md:text-4xl font-bold bg-linear-to-r from-green-400 to-green-600 bg-clip-text text-transparent">
+                <span className="text-2xl sm:text-3xl md:text-4xl font-bold bg-linear-to-rrom-green-400 to-green-600 bg-clip-text text-transparent">
                   CarePulse
                 </span>
                 <p className="text-gray-400 text-xs sm:text-sm mt-1">
@@ -239,17 +244,25 @@ export default function OnboardingPage() {
 
         {/* RIGHT SIDE - Image Section */}
         <section className="w-full md:w-1/2 h-80 md:h-auto relative bg-linear-to-br from-green-900/20 to-blue-900/20">
-          <div className="absolute inset-0 bg-black/10"></div>
-          <Image
-            src="/Illustration.svg"
-            alt="Healthcare Professional"
-            fill
-            className="object-cover"
-            priority
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          <div className="absolute inset-0 bg-black/10 z-0"></div>
+          <div className={`relative w-full h-full transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}>
+            <Image
+              src="/Illustration.svg"
+              alt="Healthcare Professional"
+              fill
+              className="object-cover"
+              priority
+              onLoad={handleImageLoad}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
+          {/* Loading skeleton */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-gray-800 animate-pulse z-10"></div>
+          )}
           {/* Overlay Gradient */}
-          <div className="absolute inset-0 bg-linear-to-r from-[#0D0F12] via-transparent to-transparent md:bg-linear-to-l md:from-[#0D0F12] md:via-transparent md:to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-r from-[#0D0F12] via-transparent to-transparent md:bg-linear-to-l md:from-[#0D0F12] md:via-transparent md:to-transparent z-0"></div>
         </section>
       </main>
 
