@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   creator: 'CarePulse',
   publisher: 'CarePulse',
 
-  manifest: '/icons/manifest.webmanifest',
+  manifest: '/manifest.webmanifest',
 
   icons: {
     icon: [

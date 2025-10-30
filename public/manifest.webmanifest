@@ -1,6 +1,6 @@
 {
-   "name": "My App",
-   "short_name": "MyApp",
+   "name": "CarePulse",
+   "short_name": "CarePulse",
    "start_url": "/",
    "display": "standalone",
    "theme_color": "#000000",
