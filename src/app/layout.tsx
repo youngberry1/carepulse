@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Trending Boss' }],
   creator: 'CarePulse',
   publisher: 'CarePulse',
+  manifest: '/manifest.webmanifest',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'CarePulse',
     images: [
       {
-        url: '/carepulse.png',
+        url: '/public/assets/onboarding.png',
         width: 1200,
         height: 630,
         alt: 'CarePulse App Preview',
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CarePulse — Healthcare Management',
     description: 'Manage patients & appointments smartly.',
-    images: ['/carepulse.png'],
+    images: ['/public/assets/onboarding.png'],
   }
 }
 
