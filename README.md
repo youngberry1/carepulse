@@ -38,11 +38,11 @@
 
 ### Onboarding Screen
 
-![Onboarding Preview](public\assets\onboarding.png)
+![Onboarding Preview](./public/assets/onboarding.png)
 
 ### OTP Verification
 
-![OTP Modal](public\assets\otp.png)
+![OTP Modal](./public/assets/otp.png)
 
 </div>
 
