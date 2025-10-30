@@ -13,11 +13,19 @@ export const metadata: Metadata = {
   authors: [{ name: 'Trending Boss' }],
   creator: 'CarePulse',
   publisher: 'CarePulse',
-  manifest: '/manifest.webmanifest',
+
+  manifest: '/icons/manifest.webmanifest',
+
   icons: {
-    icon: '/onboarding-1200x630.png',
-    shortcut: '/onboarding-1200x630.png',
+    icon: [
+      { url: '/icons/favicon.ico' },
+      { url: '/icons/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icons/favicon-96x96.png', type: 'image/png', sizes: '96x96' },
+    ],
+    apple: '/icons/apple-touch-icon.png',
+    shortcut: '/icons/favicon.ico',
   },
+
   openGraph: {
     title: 'CarePulse — Healthcare Management Platform',
     description: 'Easily manage patients, appointments and medical workflows.',
@@ -34,13 +42,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website',
   },
+
   twitter: {
     card: 'summary_large_image',
     title: 'CarePulse — Healthcare Management',
     description: 'Manage patients & appointments smartly.',
     images: ['https://carepulse-one-ruby.vercel.app/onboarding-1200x630.png'],
   },
-}
+};
 
 
 export default function RootLayout({
