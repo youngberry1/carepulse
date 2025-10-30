@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   publisher: 'CarePulse',
   manifest: '/manifest.webmanifest',
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
+    icon: '/onboarding-1200x630.png',
+    shortcut: '/onboarding-1200x630.png',
   },
   openGraph: {
     title: 'CarePulse — Healthcare Management Platform',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: 'CarePulse',
     images: [
       {
-        url: '/assets/onboarding.png',
+        url: '/onboarding-1200x630.png',
         width: 1200,
         height: 630,
         alt: 'CarePulse App Preview',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CarePulse — Healthcare Management',
     description: 'Manage patients & appointments smartly.',
-    images: ['/assets/onboarding.png'],
+    images: ['/onboarding-1200x630.png'],
   }
 }
 
