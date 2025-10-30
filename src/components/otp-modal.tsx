@@ -23,6 +23,31 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
   const [isResending, setIsResending] = useState(false);
   const [activeInput, setActiveInput] = useState<number | null>(null);
 
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Save the current scroll position
+      const scrollY = window.scrollY;
+
+      // Add styles to prevent scrolling
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        // Restore scrolling when modal closes
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+
+        // Restore scroll position
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   // Handle timer countdown
   useEffect(() => {
     if (!isOpen) {
@@ -313,7 +338,7 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
           {/* Verify Button */}
           <Button
             type="submit"
-            className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            className="w-full py-6 text-lg font-semibold bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             disabled={timer === 0 || otp.join("").length !== 6}
           >
             {timer === 0 ? "OTP Expired" : "Verify OTP"}

@@ -118,7 +118,7 @@ export default function OnboardingPage() {
                 />
               </div>
               <div>
-                <span className="text-2xl sm:text-3xl md:text-4xl font-bold bg-linear-to-rrom-green-400 to-green-600 bg-clip-text text-transparent">
+                <span className="text-2xl text-white sm:text-3xl md:text-4xl font-bold bg-linear-to-rrom-green-400 to-green-600 bg-clip-text">
                   CarePulse
                 </span>
                 <p className="text-gray-400 text-xs sm:text-sm mt-1">
