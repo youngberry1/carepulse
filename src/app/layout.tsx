@@ -18,10 +18,6 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
   },
-  formatDetection: {
-    email: false,
-    address: false,
-  },
   openGraph: {
     title: 'CarePulse — Healthcare Management Platform',
     description: 'Easily manage patients, appointments and medical workflows.',
@@ -29,7 +25,7 @@ export const metadata: Metadata = {
     siteName: 'CarePulse',
     images: [
       {
-        url: 'https://carepulse-one-ruby.vercel.app/assets/onboarding.png',
+        url: '/assets/onboarding.png',
         width: 1200,
         height: 630,
         alt: 'CarePulse App Preview',
@@ -42,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CarePulse — Healthcare Management',
     description: 'Manage patients & appointments smartly.',
-    images: ['https://carepulse-one-ruby.vercel.app/assets/onboarding.png'],
+    images: ['/assets/onboarding.png'],
   }
 }
 
