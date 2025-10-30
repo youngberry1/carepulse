@@ -38,11 +38,11 @@
 
 ### Onboarding Screen
 
-![Onboarding Preview](https://via.placeholder.com/600x400/11161c/FFFFFF?text=Beautiful+Onboarding+Form )
+![Onboarding Preview](public\assets\onboarding.png)
 
 ### OTP Verification
 
-![OTP Modal](https://via.placeholder.com/600x400/11161c/FFFFFF?text=Secure+OTP+Verification )
+![OTP Modal](public\assets\otp.png)
 
 </div>
 
