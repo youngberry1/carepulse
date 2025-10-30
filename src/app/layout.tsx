@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: 'CarePulse',
     images: [
       {
-        url: '/onboarding-1200x630.png',
+        url: 'https://carepulse-one-ruby.vercel.app/onboarding-1200x630.png',
         width: 1200,
         height: 630,
         alt: 'CarePulse App Preview',
@@ -38,8 +38,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CarePulse — Healthcare Management',
     description: 'Manage patients & appointments smartly.',
-    images: ['/onboarding-1200x630.png'],
-  }
+    images: ['https://carepulse-one-ruby.vercel.app/onboarding-1200x630.png'],
+  },
 }
 
 
