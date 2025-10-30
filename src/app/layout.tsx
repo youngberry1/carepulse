@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   creator: 'CarePulse',
   publisher: 'CarePulse',
   icons: {
-    icon: '/assets/carepulse.svg',
+    icon: '/public/assets/carepulse.png',
   },
   formatDetection: {
     email: false,
