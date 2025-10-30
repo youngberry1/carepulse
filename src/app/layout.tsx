@@ -14,14 +14,37 @@ export const metadata: Metadata = {
   creator: 'CarePulse',
   publisher: 'CarePulse',
   icons: {
-    icon: '/carepulse.png',
-    shortcut: '/carepulse.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
   },
   formatDetection: {
     email: false,
     address: false,
+  },
+  openGraph: {
+    title: 'CarePulse — Healthcare Management Platform',
+    description: 'Easily manage patients, appointments and medical workflows.',
+    url: 'https://carepulse-one-ruby.vercel.app/',
+    siteName: 'CarePulse',
+    images: [
+      {
+        url: '/carepulse.png',
+        width: 1200,
+        height: 630,
+        alt: 'CarePulse App Preview',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CarePulse — Healthcare Management',
+    description: 'Manage patients & appointments smartly.',
+    images: ['/carepulse.png'],
   }
 }
+
 
 export default function RootLayout({
   children,

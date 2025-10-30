@@ -1,6 +1,6 @@
 # 🏥 CarePulse - Modern Healthcare Onboarding Experience
 
-![CarePulse Banner](/src/app/carepulse.png )
+![CarePulse Banner](/public/carepulse.png )
 
 **A sleek, modern onboarding experience for healthcare management with OTP verification**
 
