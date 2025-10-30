@@ -1,6 +1,6 @@
 # 🏥 CarePulse - Modern Healthcare Onboarding Experience
 
-![CarePulse Banner](https://via.placeholder.com/1200x400/0D0F12/FFFFFF?text=CarePulse+Healthcare+Management )
+![CarePulse Banner](/public/assets/CarePulse%20Banner.svg )
 
 **A sleek, modern onboarding experience for healthcare management with OTP verification**
 
@@ -42,7 +42,7 @@
 
 ### OTP Verification
 
-![OTP Modal](./public/assets/otp.png)
+![OTP Modal](/public/assets/otp.png)
 
 </div>
 
