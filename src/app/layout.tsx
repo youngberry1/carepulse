@@ -58,9 +58,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        {children}
+    <html lang="en" className="bg-[#0D0F12]">
+      <body className={`${inter.className} bg-[#0D0F12] min-h-screen overflow-x-hidden antialiased`}>
+        <main className="min-h-screen bg-[#0D0F12]">
+          {children}
+        </main>
         <Toaster
           position="top-right"
           expand={false}

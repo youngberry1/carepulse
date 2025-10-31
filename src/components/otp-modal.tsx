@@ -12,37 +12,33 @@ interface OTPModalProps {
   isOpen: boolean;
   onClose: () => void;
   phoneNumber: string;
+  onVerified: () => void;
 }
 
 const OTP_TIMER_SECONDS = 120; // 2 minutes
 
-export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
+export function OTPModal({ isOpen, onClose, phoneNumber, onVerified }: OTPModalProps) {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [timer, setTimer] = useState(OTP_TIMER_SECONDS);
   const [isResending, setIsResending] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
   const [activeInput, setActiveInput] = useState<number | null>(null);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
     if (isOpen) {
-      // Save the current scroll position
       const scrollY = window.scrollY;
-
-      // Add styles to prevent scrolling
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
 
       return () => {
-        // Restore scrolling when modal closes
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
         document.body.style.overflow = '';
-
-        // Restore scroll position
         window.scrollTo(0, scrollY);
       };
     }
@@ -50,15 +46,12 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
 
   // Handle timer countdown
   useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
+    if (!isOpen) return;
 
     const timerId = setInterval(() => {
       setTimer((prev) => {
         if (prev <= 1) {
           clearInterval(timerId);
-          // Show toast when timer runs out
           if (prev === 1) {
             toast.error("OTP Expired", {
               description: "Your OTP has expired. Please request a new one.",
@@ -78,7 +71,9 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
   useEffect(() => {
     if (isOpen) {
       resetTimer();
-      inputRefs.current[0]?.focus();
+      setTimeout(() => {
+        inputRefs.current[0]?.focus();
+      }, 100);
     }
   }, [isOpen]);
 
@@ -86,6 +81,7 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
   const resetTimer = () => {
     setTimer(OTP_TIMER_SECONDS);
     setOtp(["", "", "", "", "", ""]);
+    setIsVerifying(false);
   };
 
   const handleFocus = (index: number) => {
@@ -96,9 +92,26 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
     setActiveInput(null);
   };
 
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData('text');
+    const numbersOnly = pastedData.replace(/\D/g, '');
+    const pastedOtp = numbersOnly.split('').slice(0, 6);
+
+    const newOtp = [...otp];
+    pastedOtp.forEach((char, i) => {
+      if (i < 6) {
+        newOtp[i] = char;
+      }
+    });
+    setOtp(newOtp);
+
+    const lastIndex = Math.min(pastedOtp.length - 1, 5);
+    inputRefs.current[lastIndex]?.focus();
+  };
+
   const handleChange = (index: number, value: string) => {
     if (value.length > 1) {
-      // If user pastes multiple characters
       const pastedOtp = value.split("").slice(0, 6);
       const newOtp = [...otp];
       pastedOtp.forEach((char, i) => {
@@ -108,7 +121,6 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
       });
       setOtp(newOtp);
 
-      // Focus the last input
       const lastIndex = Math.min(index + pastedOtp.length - 1, 5);
       inputRefs.current[lastIndex]?.focus();
       return;
@@ -140,18 +152,20 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace") {
       if (!otp[index] && index > 0) {
-        // Move to previous input on backspace
         inputRefs.current[index - 1]?.focus();
       }
-      // Clear current input on backspace
       const newOtp = [...otp];
       newOtp[index] = "";
       setOtp(newOtp);
+    } else if (e.key === "ArrowLeft" && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    } else if (e.key === "ArrowRight" && index < 5) {
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
   const handleOTPVerification = async (otpString: string) => {
-    // Show loading state
+    setIsVerifying(true);
     const toastId = toast.loading("Verifying OTP...", {
       duration: Infinity,
     });
@@ -169,18 +183,17 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
         id: toastId,
       });
 
-      // Close modal after successful verification
-      setTimeout(() => {
-        onClose();
-      }, 1000);
+      // Call the onVerified callback to handle the successful verification
+      onVerified();
 
     } catch {
-      // Remove the unused 'error' parameter
       toast.error("Verification Failed", {
         description: "Invalid OTP. Please try again.",
         duration: 4000,
         id: toastId,
       });
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -203,8 +216,6 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
     if (timer > 0) return;
 
     setIsResending(true);
-
-    // Show loading toast
     const toastId = toast.loading("Sending new OTP...", {
       duration: Infinity,
     });
@@ -226,7 +237,6 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
       inputRefs.current[0]?.focus();
 
     } catch {
-      // Remove the unused 'error' parameter
       toast.error("Failed to Resend", {
         description: "Unable to send OTP. Please try again.",
         duration: 4000,
@@ -255,6 +265,7 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
         <button
           onClick={onClose}
           className="absolute right-4 top-4 text-gray-400 hover:text-white transition-colors z-10"
+          aria-label="Close OTP verification"
         >
           <X className="h-5 w-5" />
         </button>
@@ -263,6 +274,7 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
+          aria-label="Go back to previous screen"
         >
           <ArrowLeft className="h-4 w-4" />
           Back
@@ -302,6 +314,7 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
                   onKeyDown={(e) => handleKeyDown(index, e)}
                   onFocus={() => handleFocus(index)}
                   onBlur={handleBlur}
+                  onPaste={handlePaste}
                   className={`
                     w-12 h-12 text-center text-lg font-semibold 
                     bg-[#11161c] border text-white rounded-xl 
@@ -313,7 +326,7 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
                     focus:border-green-500 focus:scale-110 focus:shadow-lg focus:shadow-green-500/25 focus:z-10 focus:relative
                     disabled:opacity-50 disabled:cursor-not-allowed
                   `}
-                  disabled={timer === 0}
+                  disabled={timer === 0 || isVerifying}
                 />
               ))}
             </div>
@@ -339,9 +352,9 @@ export function OTPModal({ isOpen, onClose, phoneNumber }: OTPModalProps) {
           <Button
             type="submit"
             className="w-full py-6 text-lg font-semibold bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            disabled={timer === 0 || otp.join("").length !== 6}
+            disabled={timer === 0 || otp.join("").length !== 6 || isVerifying}
           >
-            {timer === 0 ? "OTP Expired" : "Verify OTP"}
+            {isVerifying ? "Verifying..." : (timer === 0 ? "OTP Expired" : "Verify OTP")}
           </Button>
 
           {/* Resend OTP */}
